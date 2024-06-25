@@ -1,0 +1,71 @@
+<div *ngIf="errorMessage == ''" class="alert alert-success alert-dismissible fade show alertShow" role="alert">
+  <strong>Success! </strong>
+  <button (click)="closeAlert()" type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+</div>
+<div *ngIf="errorMessage != null && errorMessage != ''" class="alert alert-danger alert-dismissible fade show alertShow" role="alert">
+  <strong>Error!</strong> {{errorMessage}}
+  <button (click)="closeAlert()" type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+</div>
+<div class="table-wrapper">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Departments</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let employee of employees">
+      <td>{{ employee.name }}</td>
+      <td>{{ getCommaSeperatedNames(employee.departments) }}</td>
+      <td>
+        <button type="button" class="btn btn-primary editBtn" data-toggle="modal"
+                data-target="#employeeCreateEditModal" (click)="populateFormData(employee)">Edit
+        </button>
+        <button type="button" class="btn btn-danger" (click)="deleteEmployee(employee.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#employeeCreateEditModal" (click)="resetForm()">
+  Create
+</button>
+
+<div class="modal fade" id="employeeCreateEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Personal information</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="employeeForm">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" formControlName="name">
+            <span *ngIf="!employeeForm.value.name && employeeForm.touched">Name is required</span>
+          </div>
+          <div class="row">
+            <label for="departments" class="form-label">Departments</label>
+            <mat-form-field>
+              <mat-select formControlName="departments" multiple id = "departments" >
+                <mat-option *ngFor="let department of departments"  [value]="department.id">{{department.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" *ngIf="!employeeForm.value.id"
+                (click)="addEmployee(employeeForm.value)" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-primary" *ngIf="employeeForm.value.id"
+                (click)="updateEmployee(employeeForm.value)">Save
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

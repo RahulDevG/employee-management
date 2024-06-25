@@ -1,0 +1,11 @@
+.cdk-overlay-connected-position-bounding-box {
+  z-index: 99999 !important;
+}
+
+.alertShow{
+  position: absolute;
+  right:10px;
+  top:10px;
+  width:400px;
+  z-index:1290;
+}

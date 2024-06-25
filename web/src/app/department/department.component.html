@@ -1,0 +1,81 @@
+<div *ngIf="errorMessage == ''" class="alert alert-success alert-dismissible fade show alertShow" role="alert" id="alert-success">
+  <strong>Success!</strong>
+  <button (click)="closeAlert()" type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+</div>
+<div *ngIf="errorMessage != null && errorMessage != ''" class="alert alert-danger alert-dismissible fade show alertShow" role="alert" id="alert-danger">
+  <strong>Error!</strong> {{errorMessage}}
+  <button (click)="closeAlert()" type="button" class="btn-close" data-bs-dismiss = "alert" aria-label="Close"></button>
+</div>
+<div class="table-wrapper">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Read only</th>
+      <th>Mandatory</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let department of departments">
+      <td>{{ department.name }}</td>
+      <td>{{ department.readOnly }}</td>
+      <td>{{ department.mandatory }}</td>
+      <td>
+        <button type="button" class="btn btn-primary editBtn" data-toggle="modal"
+                data-target="#departmentCreateEditModal" (click)="populateFormData(department)">Edit
+        </button>
+        <button type="button" class="btn btn-danger" (click)="deleteDepartment(department.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#departmentCreateEditModal"
+        (click)="resetForm()">
+  Create
+</button>
+
+<div class="modal fade" id="departmentCreateEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Department information</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="departmentForm">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" formControlName="name">
+            <span *ngIf="!departmentForm.value.name && departmentForm.touched">Name is required</span>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value=false id="mandatory" formControlName="mandatory">
+            <label class="form-check-label" for="mandatory">
+              Mandatory
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value=false id="readOnly" formControlName="readOnly">
+            <label class="form-check-label" for="readOnly">
+              Read-only
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" *ngIf="!departmentForm.value.id"
+                (click)="addDepartment(departmentForm.value)" data-dismiss="modal">Save
+        </button>
+        <button type="button" class="btn btn-primary" *ngIf="departmentForm.value.id"
+                (click)="updateDepartment(departmentForm.value)">Save
+        </button>
+        <button type="button" class="btn btn-secondary btn-primary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

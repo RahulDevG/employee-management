@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+.editBtn{
+  margin-right:10px;
+}
+
+/*html, body { height: 100%; }*/
+/*body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/
+
+/*.cdk-overlay-connected-position-bounding-box {*/
+/*  z-index: 99999 !important;*/
+/*  position: relative;*/
+/*}*/
+.cdk-overlay-container {
+  z-index: 9999 !important;
+  position: relative;
+
+}
+/*.cdk-overlay-origin {*/
+/*  position: relative;*/
+
+/*  z-index: 9999 !important;*/
+/*}*/

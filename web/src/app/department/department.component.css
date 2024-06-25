@@ -1,0 +1,7 @@
+.alertShow{
+  position: absolute;
+  right:10px;
+  top:10px;
+  width:400px;
+  z-index:1290;
+}
